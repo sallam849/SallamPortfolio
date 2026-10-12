@@ -1,0 +1,890 @@
+            <!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MAHMOUDASLLAM | Graphic Designer & Visual Artist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0a0a0a',
+                        secondary: '#1a1a1a',
+                        accent: '#6366f1',
+                        muted: '#a1a1aa',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #fafafa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .project-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .project-overlay {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .skill-bar {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, #818cf8, #c084fc, transparent);
+        }
+        
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #818cf8;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="antialiased">
+
+    <!-- Noise Texture Overlay -->
+    <div class="noise-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+            <div class="flex justify-between items-center">
+                <a href="#" class="font-display text-2xl font-bold tracking-tighter hover:opacity-80 transition-opacity">
+                    SALLAM<span class="text-indigo-400">.</span>
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#work" class="nav-link text-sm font-medium text-zinc-400 hover:text-white transition-colors">Work</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-zinc-400 hover:text-white transition-colors">About</a>
+                    <a href="#resume" class="nav-link text-sm font-medium text-zinc-400 hover:text-white transition-colors">Resume</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-zinc-400 hover:text-white transition-colors">Contact</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-primary/95 backdrop-blur-lg border-t border-white/5">
+            <div class="px-6 py-8 space-y-4">
+                <a href="#work" class="block text-lg font-medium text-zinc-300 hover:text-white">Work</a>
+                <a href="#about" class="block text-lg font-medium text-zinc-300 hover:text-white">About</a>
+                <a href="#resume" class="block text-lg font-medium text-zinc-300 hover:text-white">Resume</a>
+                <a href="#contact" class="block text-lg font-medium text-zinc-300 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <div class="animate-fade-in">
+                <p class="text-indigo-400 font-medium mb-4 tracking-widest text-sm uppercase">Graphic Designer & Visual Artist</p>
+                <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+                    Crafting <span class="gradient-text">Visual</span><br>
+                    Experiences
+                </h1>
+                <p class="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+                    I transform ideas into compelling visual narratives. Specializing in brand identity, editorial design, and digital experiences that leave lasting impressions.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#work" class="group relative px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-transform hover:scale-105">
+                        <span class="relative z-10">View Portfolio</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 border border-white/20 text-white font-semibold rounded-full hover:bg-white/5 transition-all">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-20 animate-slide-up" style="animation-delay: 0.4s;">
+                <div class="flex justify-center gap-12 text-zinc-500 text-sm">
+                    <div class="text-center">
+                        <div class="font-display text-2xl font-bold text-white mb-1">4+</div>
+                        <div>Years Experience</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="font-display text-2xl font-bold text-white mb-1">150+</div>
+                        <div>Projects Completed</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="font-display text-2xl font-bold text-white mb-1">40+</div>
+                        <div>Happy Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-zinc-600"></i>
+        </div>
+    </section>
+
+    <!-- Work / Portfolio Section -->
+    <section id="work" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 scroll-reveal">
+                <div>
+                    <p class="text-indigo-400 font-medium mb-2 tracking-widest text-sm uppercase">Selected Works</p>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold">Featured Projects</h2>
+                </div>
+                <div class="flex gap-2 mt-6 md:mt-0 flex-wrap" id="filter-buttons">
+                    <button class="filter-btn active px-6 py-2 rounded-full border border-white/10 text-sm font-medium transition-all hover:border-indigo-400" data-filter="all">All</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm font-medium transition-all hover:border-indigo-400" data-filter="branding">Branding</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm font-medium transition-all hover:border-indigo-400" data-filter="digital">Digital</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border border-white/10 text-sm font-medium transition-all hover:border-indigo-400" data-filter="print">Print</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="branding">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Branding/nahdi.jpeg" alt="Lumina Brand Identity" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Branding</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">A medal for Al-Nahdi</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Identity</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Guidelines</span>
+                        </div>
+                    </div>
+                </div>
+             <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="branding">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Branding/suod.jpeg" alt="Lumina Brand Identity" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Branding</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">King Saud University Shields</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Identity</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Guidelines</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="digital">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/1.jpeg " alt="Digital Art Collection" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Digital</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Evaluation standa for Dr. Salman Al-Habib Pharmacies</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">3D</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Motion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="print">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/7.jpeg" alt="Editorial Design" class="w-full h-full object-cover transition-transform duration-700">
+                            
+                        
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Print</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Whites Box</h3>
+                        <p class="text-zinc-300 text-sm mb-4">Implementation of gift boxes for Whites Pharmacies</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Layout</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Typography</span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="print">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/21.jpeg" alt="Editorial Design" class="w-full h-full object-cover transition-transform duration-700">
+                            
+                        
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Print</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Tent card</h3>
+                        <p class="text-zinc-300 text-sm mb-4">Specifically made for Ejari Financial from forex material</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Layout</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Typography</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Project 4 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="branding">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Branding/mk.jpeg" alt="Packaging Design" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Branding</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Forex cubes designed for Makyun</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Packaging</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Print</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="digital">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/16.jpeg" alt="UI Design" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Digital</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">I stand with the NFC feature for social media pages for one of the doctors</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">UI/UX</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">App</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="digital">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/12.jpeg" alt="UI Design" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Digital</span>
+                        <h3 class="font-display text-2xl font-bold mb-2"> stand made of Forex material with acrylic</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">UI/UX</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">App</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="digital">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/11.jpeg" alt="UI Design" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Digital</span>
+                        <h3 class="font-display text-2xl font-bold mb-2"> stand made of Forex material with acrylic</h3>
+                        <p class="text-zinc-300 text-sm mb-4">  </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">UI/UX</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">App</span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+                <!-- Project 6 -->
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer scroll-reveal" data-category="print">
+                    <div class="aspect-[4/5] overflow-hidden bg-zinc-900">
+                        <img src="Print/22.jpeg" alt="Poster Design" class="w-full h-full object-cover transition-transform duration-700">
+                    </div> 
+                    
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+                        <span class="text-indigo-400 text-sm font-medium mb-2">Print</span>
+                        <h3 class="font-display text-2xl font-bold mb-2">Jazz Festival</h3>
+                        <p class="text-zinc-300 text-sm mb-4">Annual music festival poster series</p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Poster</span>
+                            <span class="px-3 py-1 bg-white/10 rounded-full text-xs">Illustration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6 relative bg-zinc-950/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="scroll-reveal">
+                    <div class="relative">
+                        <div class="aspect-[3/4] rounded-2xl overflow-hidden">
+                            <img src="im/SALLAM.jpeg" alt="Alex Morgan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl -z-10"></div>
+                        <div class="absolute -top-6 -left-6 w-32 h-32 border border-indigo-500/30 rounded-2xl -z-10"></div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal">
+                    <p class="text-indigo-400 font-medium mb-2 tracking-widest text-sm uppercase">About Me</p>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">MAHMOUDASLLAM</h2>
+                    <p class="text-zinc-400 text-lg leading-relaxed mb-6">
+                       I’m a multidisciplinary graphic designer based in Medina with over 2 years of experience in designing visual identities and digital experiences. My approach combines strategic thinking with an artistic sense. I believe great design should be invisible
+                        – it should feel inevitable. Every project starts with thorough research and ends with precise execution down to the last pixel.
+                    </p>
+                    <p class="text-zinc-400 leading-relaxed mb-8">
+                        I specialize in printing cardboard boxes of various sizes and shapes, and creating models in forex, foam, and acrylic.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Brand Identity</span>
+                                <span class="text-zinc-500">95%</span>
+                            </div>
+                            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 0%" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">UI/UX Design</span>
+                                <span class="text-zinc-500">90%</span>
+                            </div>
+                            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 0%" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Motion Graphics</span>
+                                <span class="text-zinc-500">85%</span>
+                            </div>
+                            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Illustration</span>
+                                <span class="text-zinc-500">80%</span>
+                            </div>
+                            <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume / Experience Section -->
+    <section id="resume" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-20 scroll-reveal">
+                <p class="text-indigo-400 font-medium mb-2 tracking-widest text-sm uppercase">Experience</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold">Resume</h2>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px timeline-line transform md:-translate-x-1/2"></div>
+
+                <!-- Experience 1 -->
+                <div class="relative mb-16 scroll-reveal">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right md:pr-12 pl-20 md:pl-0">
+                            <h3 class="font-display text-xl font-bold mb-1">Senior Graphic Designer</h3>
+                            <p class="text-indigo-400 font-medium mb-2">Pentagram</p>
+                            <p class="text-zinc-400 text-sm leading-relaxed">Leading brand identity projects for Fortune 500 companies. Managing a team of 4 designers and overseeing creative direction.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-primary z-10"></div>
+                        <div class="md:w-5/12 md:pl-12 pl-20 mt-2 md:mt-0">
+                            <span class="text-zinc-500 font-mono text-sm">2021 — Present</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="relative mb-16 scroll-reveal">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right md:pr-12 pl-20 md:pl-0 md:order-1 order-2">
+                            <span class="text-zinc-500 font-mono text-sm">2018 — 2021</span>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-purple-500 rounded-full border-4 border-primary z-10"></div>
+                        <div class="md:w-5/12 md:pl-12 pl-20 mt-2 md:mt-0 md:order-2 order-1">
+                            <h3 class="font-display text-xl font-bold mb-1">Visual Designer</h3>
+                            <p class="text-purple-400 font-medium mb-2">Google Creative Lab</p>
+                            <p class="text-zinc-400 text-sm leading-relaxed">Designed marketing campaigns and product launches. Collaborated with engineering teams on Material Design system updates.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="relative mb-16 scroll-reveal">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right md:pr-12 pl-20 md:pl-0">
+                            <h3 class="font-display text-xl font-bold mb-1">Junior Designer</h3>
+                            <p class="text-pink-400 font-medium mb-2">Collins</p>
+                            <p class="text-zinc-400 text-sm leading-relaxed">Assisted senior designers on rebranding projects. Developed presentation decks and initial concept explorations.</p>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-pink-500 rounded-full border-4 border-primary z-10"></div>
+                        <div class="md:w-5/12 md:pl-12 pl-20 mt-2 md:mt-0">
+                            <span class="text-zinc-500 font-mono text-sm">2016 — 2018</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="relative scroll-reveal">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right md:pr-12 pl-20 md:pl-0 md:order-1 order-2">
+                            <span class="text-zinc-500 font-mono text-sm">2022 — 2023</span>
+                        </div>
+                        <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-zinc-600 rounded-full border-4 border-primary z-10"></div>
+                        <div class="md:w-5/12 md:pl-12 pl-20 mt-2 md:mt-0 md:order-2 order-1">
+                            <h3 class="font-display text-xl font-bold mb-1">Bachelor's degree from the Faculty of Islamic and Arabic Studies (Al-Azhar University)</h3>
+                            <p class="text-zinc-400 font-medium mb-2">  </p>
+                            <p class="text-zinc-400 text-sm leading-relaxed">  </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Awards -->
+            <div class="mt-24 scroll-reveal">
+                <h3 class="font-display text-2xl font-bold mb-8 text-center">Recognition</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-xl text-center hover:border-indigo-500/30 transition-colors">
+                        <i data-lucide="award" class="w-8 h-8 text-indigo-400 mx-auto mb-3"></i>
+                        <h4 class="font-bold mb-1">AIGA 365</h4>
+                        <p class="text-zinc-500 text-sm">Design Excellence Award 2023</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl text-center hover:border-purple-500/30 transition-colors">
+                        <i data-lucide="trophy" class="w-8 h-8 text-purple-400 mx-auto mb-3"></i>
+                        <h4 class="font-bold mb-1">D&AD Pencil</h4>
+                        <p class="text-zinc-500 text-sm">Yellow Pencil Winner 2022</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl text-center hover:border-pink-500/30 transition-colors">
+                        <i data-lucide="star" class="w-8 h-8 text-pink-400 mx-auto mb-3"></i>
+                        <h4 class="font-bold mb-1">Communication Arts</h4>
+                        <p class="text-zinc-500 text-sm">Excellence Award 2021</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="py-32 px-6 bg-zinc-950/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 scroll-reveal">
+                <p class="text-indigo-400 font-medium mb-2 tracking-widest text-sm uppercase">What I Do</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold">Services</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-8 rounded-2xl hover:bg-white/5 transition-all group scroll-reveal">
+                    <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="palette" class="w-6 h-6 text-indigo-400"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3">Brand Identity</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Logo design, visual systems, brand guidelines, and strategic positioning.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl hover:bg-white/5 transition-all group scroll-reveal">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="layout" class="w-6 h-6 text-purple-400"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3">UI/UX Design</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Web and mobile interfaces, design systems, prototyping, and user research.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl hover:bg-white/5 transition-all group scroll-reveal">
+                    <div class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="printer" class="w-6 h-6 text-pink-400"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3">Print Design</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Editorial layouts, packaging, posters, and marketing collateral.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl hover:bg-white/5 transition-all group scroll-reveal">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="video" class="w-6 h-6 text-blue-400"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-3">Motion</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Animation, video editing, and motion graphics for digital platforms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <p class="text-indigo-400 font-medium mb-2 tracking-widest text-sm uppercase">Get in Touch</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Let's Work Together</h2>
+                <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+                    Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8 scroll-reveal">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="mail" class="w-5 h-5 text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Email</h4>
+                            <a href="mailto:hello@alexmorgan.design" class="text-zinc-400 hover:text-white transition-colors">mahmoudsallamj@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Location</h4>
+                            <p class="text-zinc-400">Saudi Arabia - Medina</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="clock" class="w-5 h-5 text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Availability</h4>
+                            <p class="text-zinc-400">Open for freelance projects</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <h4 class="font-bold mb-4">Follow Me</h4>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-500/20 hover:text-indigo-400 transition-all">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-500/20 hover:text-indigo-400 transition-all">
+                                <i data-lucide="twitter" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-500/20 hover:text-indigo-400 transition-all">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-500/20 hover:text-indigo-400 transition-all">
+                                <i data-lucide="dribbble" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="space-y-6 scroll-reveal" id="contact-form">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-zinc-300">Name</label>
+                        <input type="text" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors text-white placeholder-zinc-600" placeholder="MAHMOUDASLLAM">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-zinc-300">Email</label>
+                        <input type="email" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors text-white placeholder-zinc-600" placeholder="mahmoudsallamj@gmail.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-zinc-300">Project Type</label>
+                        <select class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors text-white">
+                            <option value="" class="bg-zinc-900">Select a service</option>
+                            <option value="branding" class="bg-zinc-900">Brand Identity</option>
+                            <option value="digital" class="bg-zinc-900">Digital Design</option>
+                            <option value="print" class="bg-zinc-900">Print Design</option>
+                            <option value="other" class="bg-zinc-900">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-zinc-300">Message</label>
+                        <textarea rows="4" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors text-white placeholder-zinc-600 resize-none" placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 group">
+                        <span>Send Message</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="font-display text-xl font-bold">
+                M.SALLAM<span class="text-indigo-400">.</span>
+            </div>
+            <p class="text-zinc-500 text-sm"> 2026 MAHMOUDASLLAM. All rights reserved.</p>
+            <div class="flex gap-6 text-sm text-zinc-500">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-primary/80', 'backdrop-blur-lg', 'border-b', 'border-white/5');
+            } else {
+                navbar.classList.remove('bg-primary/80', 'backdrop-blur-lg', 'border-b', 'border-white/5');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Animate skill bars if present
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Portfolio filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const button = e.target.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            button.innerHTML = '<span>Message Sent!</span>';
+            button.classList.add('bg-green-600');
+            
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.classList.remove('bg-green-600');
+                e.target.reset();
+            }, 3000);
+        });
+
+        // Parallax effect for hero elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.animate-float');
+            parallaxElements.forEach((el, index) => {
+                const speed = 0.5 + (index * 0.1);
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
